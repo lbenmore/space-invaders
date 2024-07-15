@@ -1,0 +1,18 @@
+@import url('./battlefield.css');
+
+* {
+  box-sizing: border-box
+}
+
+:root {
+  --vw: 1vw;
+  --vh: 1vh;
+  --off: white;
+  --on: black;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}

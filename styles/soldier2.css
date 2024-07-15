@@ -1,0 +1,94 @@
+.squad:nth-child(3n + 2) .soldier .piece {
+  --col: calc(100% / 8);
+  --width: calc(100% / 12 * 8);
+  position: relative;
+  width: var(--width);
+}
+
+.squad:nth-child(3n + 2) .soldier .piece::before {
+  padding-top: calc((5 * var(--width) / 5) / 8);
+}
+
+.squad:nth-child(3n + 2) .soldier .piece1 {
+  background-image: linear-gradient(to right,
+          var(--off) 0,
+          var(--off) calc(var(--col) * 3),
+          var(--on) calc(var(--col) * 3),
+          var(--on) calc(var(--col) * 5),
+          var(--off) calc(var(--col) * 5));
+}
+
+.squad:nth-child(3n + 2) .soldier .piece2 {
+  background-image: linear-gradient(to right,
+          var(--off) 0,
+          var(--off) calc(var(--col) * 2),
+          var(--on) calc(var(--col) * 2),
+          var(--on) calc(var(--col) * 6),
+          var(--off) calc(var(--col) * 6));
+}
+
+.squad:nth-child(3n + 2) .soldier .piece3 {
+  background-image: linear-gradient(to right,
+          var(--off) 0,
+          var(--off) calc(var(--col) * 1),
+          var(--on) calc(var(--col) * 1),
+          var(--on) calc(var(--col) * 7),
+          var(--off) calc(var(--col) * 7));
+}
+
+.squad:nth-child(3n + 2) .soldier .piece4 {
+  background-image: linear-gradient(to right,
+          var(--on) 0,
+          var(--on) calc(var(--col) * 2),
+          var(--off) calc(var(--col) * 2),
+          var(--off) calc(var(--col) * 3),
+          var(--on) calc(var(--col) * 3),
+          var(--on) calc(var(--col) * 5),
+          var(--off) calc(var(--col) * 5),
+          var(--off) calc(var(--col) * 6),
+          var(--on) calc(var(--col) * 6),
+          var(--on) calc(var(--col) * 7));
+}
+
+.squad:nth-child(3n + 2) .soldier .piece5 {
+  background-color: var(--on);
+}
+
+.squad:nth-child(3n + 2) .soldier .piece6 {
+  background-image: linear-gradient(to right,
+          var(--off) 0,
+          var(--off) calc(var(--col) * 1),
+          var(--on) calc(var(--col) * 1),
+          var(--on) calc(var(--col) * 2),
+          var(--off) calc(var(--col) * 2),
+          var(--off) calc(var(--col) * 3),
+          var(--on) calc(var(--col) * 3),
+          var(--on) calc(var(--col) * 5),
+          var(--off) calc(var(--col) * 5),
+          var(--off) calc(var(--col) * 6),
+          var(--on) calc(var(--col) * 6),
+          var(--on) calc(var(--col) * 7),
+          var(--off) calc(var(--col) * 7));
+}
+
+.squad:nth-child(3n + 2) .soldier .piece7 {
+  background-image: linear-gradient(to right,
+          var(--on) 0,
+          var(--on) calc(var(--col) * 1),
+          var(--off) calc(var(--col) * 1),
+          var(--off) calc(var(--col) * 7),
+          var(--on) calc(var(--col) * 7));
+}
+
+.squad:nth-child(3n + 2) .soldier .piece8 {
+  background-image: linear-gradient(to right,
+          var(--off) 0,
+          var(--off) calc(var(--col) * 1),
+          var(--on) calc(var(--col) * 1),
+          var(--on) calc(var(--col) * 2),
+          var(--off) calc(var(--col) * 2),
+          var(--off) calc(var(--col) * 6),
+          var(--on) calc(var(--col) * 6),
+          var(--on) calc(var(--col) * 7),
+          var(--off) calc(var(--col) * 7));
+}
