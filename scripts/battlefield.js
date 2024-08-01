@@ -59,7 +59,7 @@ export default class Battlefield {
             switch (code) {
                 case 'Space':
                     this.paused = !this.paused;
-                    if (!this.paused) this.target.dispatchEvent(new CustomEvent('play'));
+                    this.target.dispatchEvent(new CustomEvent(this.paused ? 'pause' : 'play'));
                     break;
 
                 default: // do nothing
