@@ -2,68 +2,84 @@ import Player from './player.js';
 import Platoon from './platoon.js';
 
 export default class Battlefield {
-  constructor(target, options) {
-      const defaultOptions = {
-          squads: 4,
-          soldiers: 6,
-          playerSpeed: 3
-      };
+    constructor(target, options) {
+        const defaultOptions = {
+            squads: 4,
+            soldiers: 6,
+            playerSpeed: 3
+        };
 
-      const opts = Object.assign(defaultOptions, options);
+        const opts = Object.assign(defaultOptions, options);
 
-      this.target = target;
-      this.numSquads = opts.squads;
-      this.numSoldiers = opts.soldiers;
-      this.playerSpeed = opts.playerSpeed;
+        this.target = target;
+        this.numSquads = opts.squads;
+        this.numSoldiers = opts.soldiers;
+        this.playerSpeed = opts.playerSpeed;
 
-      this.player = null;
-      this.platoon = null;
-      this.activeMissiles = [];
+        this.player = null;
+        this.platoon = null;
+        this.activeMissiles = [];
+        this.paused = false;
 
-      this.init();
-  }
+        this.init();
+    }
 
-  destroy() {
-      this.player.destroy();
-      this.platoon.destroy();
-      this.activeMissiles.forEach(missile => missile.destroy());
+    destroy() {
+        this.player.destroy();
+        this.platoon.destroy();
+        this.activeMissiles.forEach(missile => missile.destroy());
 
-      this.player = null;
-      this.platoon = null;
-      this.activeMissiles = [];
-  }
-  
-  gameOver() {
-      this.destroy();
+        this.player = null;
+        this.platoon = null;
+        this.activeMissiles = [];
+        this.paused = false;
+    }
 
-      if (confirm('game over')) {
-          this.init();
-      }
-  }
-  
-  fire() {
-      this.player.fire();
-  }
+    gameOver() {
+        this.destroy();
 
-  attachListeners() {
-      this.fire = this.fire.bind(this);
+        if (confirm('game over')) {
+            this.init();
+        }
+    }
 
-      this.target.addEventListener('click', this.fire);
-  }
+    fire() {
+        if (this.paused) return;
+        this.player.fire();
+    }
 
-  populate() {
-      this.player = new Player(this);
-      this.platoon = new Platoon(this, this.numSquads, this.numSoldiers);
+    attachListeners() {
+        this.fire = this.fire.bind(this);
 
-      this.target.appendChild(this.platoon.elements.container);
-      this.target.appendChild(this.player.elements.container);
-  }
+        this.target.addEventListener('click', this.fire);
 
-  init() {
-      this.target.style.setProperty('--squads', this.numSquads);
-      this.target.style.setProperty('--soldiers', this.numSoldiers);
+        addEventListener('keypress', (evt) => {
+            const { code } = evt;
 
-      this.populate();
-      this.attachListeners();
-  }
+            switch (code) {
+                case 'Space':
+                    this.paused = !this.paused;
+                    if (!this.paused) this.target.dispatchEvent(new CustomEvent('play'));
+                    break;
+
+                default: // do nothing
+            }
+        })
+    }
+
+    populate() {
+        this.player = new Player(this);
+        this.platoon = new Platoon(this, this.numSquads, this.numSoldiers);
+
+        this.target.appendChild(this.platoon.elements.container);
+        this.target.appendChild(this.player.elements.container);
+    }
+
+    init() {
+        this.target.style.setProperty('--squads', this.numSquads);
+        this.target.style.setProperty('--soldiers', this.numSoldiers);
+
+        this.populate();
+        this.attachListeners();
+    }
 }

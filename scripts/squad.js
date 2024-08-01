@@ -1,48 +1,48 @@
 import Soldier from './soldier.js';
 
 export default class Squad {
-  constructor(platoon, numSoldiers = 6) {
-      this.platoon = platoon;
-      this.elements = {};
-      this.soldiers = Array(numSoldiers).fill('');
-      this.health = numSoldiers;
+    constructor(platoon, numSoldiers = 6) {
+        this.platoon = platoon;
+        this.elements = {};
+        this.soldiers = Array(numSoldiers).fill('');
+        this.health = numSoldiers;
 
-      this.init();
-  }
+        this.init();
+    }
 
-  destroy() {
-      this.soldiers.forEach(soldier => soldier.destroy());
+    destroy() {
+        this.soldiers.forEach(soldier => soldier.destroy());
 
-      for (const el in this.elements) {
-          this.elements[el].parentNode.removeChild(this.elements[el]);
-      }
+        for (const el in this.elements) {
+            this.elements[el].parentNode.removeChild(this.elements[el]);
+        }
 
-      this.soldiers = null;
-      this.health = null;
-  }
-  
-  hit() {
-      if (!--this.health) {
-          this.platoon.hit();
-      }
-  }
+        this.soldiers = null;
+        this.health = null;
+    }
 
-  decorate() {
-      this.elements.container.classList.add('squad');
-  }
+    hit() {
+        if (!--this.health) {
+            this.platoon.hit();
+        }
+    }
 
-  populate() {
-      this.elements.container = document.createElement('div');
+    decorate() {
+        this.elements.container.classList.add('squad');
+    }
 
-      this.soldiers = this.soldiers.map(_ => new Soldier(this));
+    populate() {
+        this.elements.container = document.createElement('div');
 
-      this.soldiers.forEach(soldier => {
-          this.elements.container.appendChild(soldier.elements.container);
-      })
-  }
+        this.soldiers = this.soldiers.map(_ => new Soldier(this));
 
-  init() {
-      this.populate();
-      this.decorate();
-  }
+        this.soldiers.forEach(soldier => {
+            this.elements.container.appendChild(soldier.elements.container);
+        })
+    }
+
+    init() {
+        this.populate();
+        this.decorate();
+    }
 }
