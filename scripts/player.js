@@ -7,6 +7,8 @@ export default class Player {
         this.elements = {};
         this.dir = 0;
 
+        this.dencrementSweep = this.dencrementSweep.bind(this);
+
         this.init();
     }
 
@@ -40,13 +42,11 @@ export default class Player {
             this.dir < 0 && playerLeft > 0
         ) {
             this.elements.container.style.left = `${playerLeft + (this.speed * this.dir)}px`;
-        } else if (this.dir > 0 && playerLeft + playerWidth >= battlefieldWidth) {
-            this.dir = -1;
-        } else if (this.dir < 0 && playerLeft <= 0) {
-            this.dir = 1;
+        } else {
+            this.dir = this.dir === 1 ? -1 : 1;
         }
 
-        this.currentFrame = requestAnimationFrame(this.dencrementSweep.bind(this));
+        this.currentFrame = requestAnimationFrame(this.dencrementSweep);
     }
 
     initAnim() {
@@ -70,7 +70,6 @@ export default class Player {
     }
 
     attachListeners() {
-        this.dencrementSweep = this.dencrementSweep.bind(this);
         this.battlefield.target.addEventListener('play', this.dencrementSweep);
     }
 
