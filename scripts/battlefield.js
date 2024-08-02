@@ -21,6 +21,9 @@ export default class Battlefield {
         this.activeMissiles = [];
         this.paused = false;
 
+        this.fire = this.fire.bind(this);
+        this.onKeyPress = this.onKeyPress.bind(this);
+
         this.init();
     }
 
@@ -28,6 +31,7 @@ export default class Battlefield {
         this.player.destroy();
         this.platoon.destroy();
         this.activeMissiles.forEach(missile => missile.destroy());
+        this.detachListeners();
 
         this.player = null;
         this.platoon = null;
@@ -48,23 +52,27 @@ export default class Battlefield {
         this.player.fire();
     }
 
+    onKeyPress(evt) {
+        const { code } = evt;
+
+        switch (code) {
+            case 'Space':
+                this.paused = !this.paused;
+                this.target.dispatchEvent(new CustomEvent(this.paused ? 'pause' : 'play'));
+                break;
+
+            default: // do nothing
+        }
+    }
+
+    detachListeners() {
+        this.target.removeEventListener('click', this.fire);
+        removeEventListener('keypress', this.onKeyPress);
+    }
+
     attachListeners() {
-        this.fire = this.fire.bind(this);
-
         this.target.addEventListener('click', this.fire);
-
-        addEventListener('keypress', (evt) => {
-            const { code } = evt;
-
-            switch (code) {
-                case 'Space':
-                    this.paused = !this.paused;
-                    this.target.dispatchEvent(new CustomEvent(this.paused ? 'pause' : 'play'));
-                    break;
-
-                default: // do nothing
-            }
-        })
+        addEventListener('keypress', this.onKeyPress);
     }
 
     populate() {

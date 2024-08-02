@@ -30,6 +30,9 @@
   display: flex;
   justify-content: space-between;
   column-gap: 3%;
+  position: relative;
+  top: 0;
+  left: 0;
   width: 100%;
   height: fit-content;
 }

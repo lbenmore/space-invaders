@@ -9,7 +9,7 @@ export default class Soldier {
 
     destroy() {
         for (const el in this.elements) {
-            this.elements[el].parentNode.removeChild(this.elements[el]);
+            this.elements[el]?.parentNode?.removeChild(this.elements[el]);
         }
 
         this.elements = null;

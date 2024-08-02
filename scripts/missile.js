@@ -5,6 +5,8 @@ export default class Missile {
         this.speed = 5;
         this.elements = {};
 
+        this.advance = this.advance.bind(this);
+
         this.init();
     }
 
@@ -77,7 +79,7 @@ export default class Missile {
             .then((result) => {
                 !result && this.missCheck()
                     .then((result) => {
-                        !result && (this.currentFrame = requestAnimationFrame(this.advance.bind(this)));
+                        !result && (this.currentFrame = requestAnimationFrame(this.advance));
                     })
             });
     }
@@ -122,7 +124,6 @@ export default class Missile {
     }
 
     attachListeners() {
-        this.advance = this.advance.bind(this);
         this.player.battlefield.target.addEventListener('play', this.advance);
     }
 
