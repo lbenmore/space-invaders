@@ -8,11 +8,13 @@ export default class Squad {
         this.health = numSoldiers;
         this.attackPosition = 0;
         this.attackAmount = 10;
-        this.advanceDelay = 1000;
+        this.advanceDelay = 3000;
         this.dir = 0;
 
         this.dencrementSweep = this.dencrementSweep.bind(this);
         this.advance = this.advance.bind(this);
+        this.onPause = this.onPause.bind(this);
+        this.onPlay = this.onPlay.bind(this);
 
         this.init();
     }
@@ -116,14 +118,23 @@ export default class Squad {
         this.elements.container.classList.add('squad');
     }
 
+    onPause() {
+        clearTimeout(this.advanceTimeout);
+    }
+
+    onPlay() {
+        this.dencrementSweep();
+        this.advanceTimeout = setTimeout(this.advance, this.advanceDelay);
+    }
+
     detachListeners() {
-        this.platoon.battlefield.target.removeEventListener('play', this.dencrementSweep);
-        this.platoon.battlefield.target.removeEventListener('play', this.advance);
+        this.platoon.battlefield.target.removeEventListener('pause', this.onPause);
+        this.platoon.battlefield.target.removeEventListener('play', this.onPlay);
     }
 
     attachListeners() {
-        this.platoon.battlefield.target.addEventListener('play', this.dencrementSweep);
-        this.platoon.battlefield.target.addEventListener('play', this.advance);
+        this.platoon.battlefield.target.addEventListener('pause', this.onPause);
+        this.platoon.battlefield.target.addEventListener('play', this.onPlay);
     }
 
     populate() {
